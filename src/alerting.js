@@ -123,14 +123,18 @@ function compileCloudwatchAlarmTemplates(functionName, functionObj) {
 function snsAlarmDimensions(resourceLogicalId) {
   return [{
     Name: 'TopicName',
-    Value: `!GetAtt ${resourceLogicalId}.TopicName`
+    Value: {
+      'Fn::GetAtt': [resourceLogicalId, 'TopicName']
+    }
   }];
 }
 
 function sqsAlarmDimensions(resourceLogicalId) {
   return [{
     Name: 'QueueName',
-    Value: `!GetAtt ${resourceLogicalId}.QueueName`
+    Value: {
+      'Fn::GetAtt': [resourceLogicalId, 'QueueName']
+    }
   }];
 }
 
