@@ -242,7 +242,7 @@ class Plugin {
           );
       } else if (dlqType === 'sqs') {
         alarmResource.Properties.Dimensions = sqsAlarmDimensions(
-          this.getLogicalIdForDlTopic(functionName)
+          this.getLogicalIdForDlQueue(functionName)
           );
       }
       resources[alarmLogicalId] = alarmResource;
