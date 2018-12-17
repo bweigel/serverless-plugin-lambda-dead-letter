@@ -1543,7 +1543,10 @@ describe('serverless-plugin-lambda-dead-letter', () => {
           Threshold: 1,
           Dimensions: [{
             Name: 'QueueName',
-            Value: '!GetAtt FunADeadLetterTopic.QueueName'
+            Value: {
+              'Fn::GetAtt': [
+                'FunADeadLetterQueue', 'QueueName'
+              ] }
           }],
           ComparisonOperator: 'GreaterThanOrEqualToThreshold',
           ActionsEnabled: true,

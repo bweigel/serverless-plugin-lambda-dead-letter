@@ -216,6 +216,10 @@ class Plugin {
   compileCloudwatchAlarm(functionName) {
     const functionObj = this.serverless.service.getFunction(functionName);
 
+    if (functionObj.deadLetter === undefined) {
+      return BbPromise.resolve();
+    }
+
     if (functionObj.deadLetter.alarm === undefined) {
       return BbPromise.resolve();
     } else if (typeof functionObj.deadLetter.alarm !== 'object' || functionObj.deadLetter.alarm === null) {
@@ -225,6 +229,7 @@ class Plugin {
                 functionObj.deadLetter.targetArn === undefined) {
       throw new Error(`Any property ${functionName}.deadLetter.[sns, sqs or targetArn] must be defined.`);
     }
+
 
     this.serverless.cli.log(`Adding alerting to ${functionObj.name}`);
     const resources = this.serverless.service.provider.compiledCloudFormationTemplate.Resources;
